@@ -44,11 +44,10 @@ app.post("/submit", (req, res) => {
     .then((result) => {
       res
         .status(200)
-        .send(`Inquiry feedback from ${name} (${email}): ${message}`);
+        .send(`Feedback from ${name} (${email}): ${message}`);
     })
     .catch((err) => {
-      console.error("Failed to save feedback", err);
-      res.status(500).send("Failed to save feedback");
+      res.status(500).send(err);
     });
 });
 
