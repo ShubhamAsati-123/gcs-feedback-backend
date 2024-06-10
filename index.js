@@ -27,6 +27,7 @@ client
   })
   .catch((err) => {
     console.error("Failed to connect to MongoDB", err);
+    process.exit(1); // Exit the process if the connection fails
   });
 
 // Routes
@@ -37,16 +38,17 @@ app.get("/", async (req, res) => {
 app.post("/", async (req, res) => {
   const { name, email, message } = req.body;
 
-  // Save to MongoDB
-  const inquiriesCollection = db.collection("feedback");
-  await inquiriesCollection
-    .insertOne({ name, email, message })
-    .then((result) => {
-      result.status(200).send(`Feedback from ${name} (${email}): ${message}`);
-    })
-    .catch((err) => {
-      res.status(500).send(err);
-    });
+  if (!name || !email || !message) {
+    return res.status(400).send("All fields are required.");
+  }
+
+  try {
+    const inquiriesCollection = db.collection("feedback");
+    await inquiriesCollection.insertOne({ name, email, message });
+    res.status(200).send(`Feedback from ${name} (${email}): ${message}`);
+  } catch (err) {
+    res.status(500).send("Failed to save feedback");
+  }
 });
 
 app.listen(PORT, () => {
