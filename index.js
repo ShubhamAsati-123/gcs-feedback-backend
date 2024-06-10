@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
   res.send("GCS Feedback Backend");
 });
 
-app.post("/submit", (req, res) => {
+app.post("/", (req, res) => {
   const { name, email, message } = req.body;
 
   // Save to MongoDB
