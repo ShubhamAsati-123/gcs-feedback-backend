@@ -42,9 +42,7 @@ app.post("/", async (req, res) => {
   await inquiriesCollection
     .insertOne({ name, email, message })
     .then((result) => {
-      res
-        .status(200)
-        .send(`Feedback from ${name} (${email}): ${message}`);
+      result.status(200).send(`Feedback from ${name} (${email}): ${message}`);
     })
     .catch((err) => {
       res.status(500).send(err);
@@ -54,4 +52,3 @@ app.post("/", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
-
