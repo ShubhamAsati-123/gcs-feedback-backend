@@ -30,16 +30,16 @@ client
   });
 
 // Routes
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   res.send("GCS Feedback Backend");
 });
 
-app.post("/", (req, res) => {
+app.post("/", async (req, res) => {
   const { name, email, message } = req.body;
 
   // Save to MongoDB
   const inquiriesCollection = db.collection("feedback");
-  inquiriesCollection
+  await inquiriesCollection
     .insertOne({ name, email, message })
     .then((result) => {
       res
