@@ -45,12 +45,12 @@ app.post("/", async (req, res) => {
   try {
     const inquiriesCollection = db.collection("feedback");
     await inquiriesCollection.insertOne({ name, email, message });
-    res.status(200).send(`Feedback from ${name} (${email}): ${message}`);
+    res.status(200).send(`Feedback Submitted`);
   } catch (err) {
     res.status(500).send("Failed to save feedback");
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on http://localhost:${PORT}`);
+// });
